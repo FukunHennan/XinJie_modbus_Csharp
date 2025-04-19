@@ -62,6 +62,7 @@ namespace 信捷modbus上位机
         int Z_Location_Start = 0, Z_Location_Enhance = 0, Z_location_End = 0;
 
 
+
         int Ax_Start = 0, Ax_End = 0, Ax_Enhance = 0;
         int Ay_Start = 0, Ay_End = 0, Ay_Enhance = 0;
         int Az_Start = 0, Az_End = 0, Az_Enhance = 0;
@@ -80,12 +81,12 @@ namespace 信捷modbus上位机
         int Run_Time=0;
         int Rest_Time = 0;
 
-        bool 数据写入标志位 = false;
+        bool Fixed_XYZ_Speed_Check = false;
         bool TCP_Connect_OK = false;
         bool Auto_Run_Flag = false;
         bool Location_Flag = false;
-        bool Parameter_Flag = false;
 
+        
         private ModbusClient TCP;
         public Form1()
         {
@@ -115,11 +116,6 @@ namespace 信捷modbus上位机
         void TCP_Write_Real(int Address,float Data)
         {
             TCP.WriteMultipleRegisters(Address, FloatToInts(Data));
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         int TCP_Read_Register(int Address)
@@ -153,36 +149,7 @@ namespace 信捷modbus上位机
             return dat[0];
         }
 
-        private void 自动运动_Click(object sender, EventArgs e)
-        {
-            if(X方向自增_checkBox.Checked|Y方向自增_checkBox.Checked| Z方向自增_checkBox.Checked)
-            {
-                Run_Time = int.Parse(运动时间.Text);
-                Rest_Time = int.Parse(间歇时间.Text);
-                Auto_Run_Flag = true;
-                Location_Flag=true;
-                //MessageBoxHelper.ShowAutoClose("固定值已经写入", "操作完成", 1000);
-                if (X方向自增_checkBox.Checked)
-                {
-
-                }
-                else if(Y方向自增_checkBox.Checked)
-                {
-
-                }
-                else if(Z方向自增_checkBox.Checked)
-                {
-
-                }
-            }
-        }
-
-        private void 停止运动_Click(object sender, EventArgs e)
-        {
-            Auto_Run_Flag=false;
-        }
-
-        void TCP_Write(int Address, int Data)
+        void TCP_Write_Dint(int Address, int Data)
         {
             int Real_Write_holdingRegisters;
             if (TCP.Connected)
@@ -208,24 +175,196 @@ namespace 信捷modbus上位机
 
         }
 
+        //位置指定运动函数
+
+        void XYZ_Speed_Data_Write(string X_Location,string Y_location,string Z_location,string X_Speed,string Y_Speed,string Z_Speed) 
+        {
+            //速度写入
+            TCP_Write_Dint(HD102, (int)Math.Round(double.Parse(X_Speed) * 100));
+            TCP_Write_Dint(HD202, (int)Math.Round(double.Parse(Y_Speed) * 100));
+            TCP_Write_Dint(HD302, (int)Math.Round(double.Parse(Z_Speed) * 100));
+
+            //位置写入
+            TCP_Write_Dint(HD104, (int)Math.Round(double.Parse(X_Location) * 100));
+            TCP_Write_Dint(HD204, (int)Math.Round(double.Parse(Y_location) * 100));
+            TCP_Write_Dint(HD304, (int)Math.Round(double.Parse(Z_location) * 100));
+
+
+
+        }
+
+        void XYZ_Speed_Data_Run(string X_GO, string Y_GO, string Z_GO)
+        {
+            bool X_Flag = false, Y_Flag = false, Z_Flag = false;
+            if (X_textBox.Text != X_GO)            //判断X点是否已在指定位置
+            {
+                TCP.WriteSingleCoil(M1005, true);
+                X_Flag = true;
+            }
+            if (Y_textBox.Text != Y_GO)            //判断Y点是否已在指定位置
+            {
+                TCP.WriteSingleCoil(M1105, true);
+                Y_Flag = true;
+            }
+            if (Z_textBox.Text != Z_GO)            //判断Z点是否已在指定位置
+            {
+                TCP.WriteSingleCoil(M1205, true);
+                Z_Flag = true;
+            }
+            if (X_Flag | Y_Flag | Z_Flag)
+            {
+                MessageBoxHelper.ShowAutoClose("设备正在前往指定位置", "操作完成", 1000);
+                X_Flag = Y_Flag = Z_Flag = false;
+                Fixed_XYZ_Speed_Check = true;
+            }
+            else
+            {
+                MessageBoxHelper.ShowAutoClose("设备已经处于目标位置", "操作失败", 1000);
+            }
+        }
+
+        bool XYZ_Speed_Data_Check(string X_Location, string Y_location, string Z_location, string X_Speed, string Y_Speed, string Z_Speed)
+        {
+            bool X_Data_Write_OK = false;
+            bool Y_Data_Write_OK = false;
+            bool Z_Data_Write_OK = false;
+            bool X_Speed_Write_OK = false;
+            bool Y_Speed_Write_OK = false;
+            bool Z_Speed_Write_OK = false;
+            if (TCP_Read_Register(HD102) == (int)Math.Round(double.Parse(X_Speed) * 100))
+            {
+                X_Speed_Write_OK = true;
+            }
+            else
+            {
+                TCP_Write_Dint(HD102, (int)Math.Round(double.Parse(X_Speed) * 100));
+            }
+            if (TCP_Read_Register(HD202) == (int)Math.Round(double.Parse(Y_Speed) * 100))
+            {
+                Y_Speed_Write_OK = true;
+            }
+            else
+            {
+                TCP_Write_Dint(HD202, (int)Math.Round(double.Parse(Y_Speed) * 100));
+            }
+            if (TCP_Read_Register(HD302) == (int)Math.Round(double.Parse(Z_Speed) * 100))
+            {
+                Z_Speed_Write_OK = true;
+            }
+            else
+            {
+                TCP_Write_Dint(HD302, (int)Math.Round(double.Parse(Z_Speed) * 100));
+            }
+            if (TCP_Read_Register(D10) == (int)Math.Round(double.Parse(X_Location) * 100))
+            {
+                X_Data_Write_OK = true;
+            }
+            if (TCP_Read_Register(D12) == (int)Math.Round(double.Parse(Y_location) * 100))
+            {
+                Y_Data_Write_OK = true;
+            }
+            if (TCP_Read_Register(D14) == (int)Math.Round(double.Parse(Z_location) * 100))
+            {
+                Z_Data_Write_OK = true;
+            }
+
+            if ((X_Data_Write_OK) && (Y_Data_Write_OK) && (Z_Data_Write_OK)&&(X_Speed_Write_OK)&&(Y_Speed_Write_OK)&&(Z_Speed_Write_OK))
+            {
+                X_Data_Write_OK = false;
+                Y_Data_Write_OK = false;
+                Z_Data_Write_OK = false;
+                X_Speed_Write_OK = false;
+                Y_Speed_Write_OK = false;
+                Z_Speed_Write_OK = false;
+                return true;
+            }
+            return false;
+        }
+
+
+        void Sin_Data_Write(string Ax,string Fx,string Ox,string Ay,string Fy,string Oy, string Az, string Fz, string Oz, string Ar, string Fr, string Or)
+        {
+            //X
+            TCP_Write_Dint(HD110, (int)Math.Round(double.Parse(Ax) * 100));
+            TCP_Write_Real(HD112, float.Parse(Fx));
+            TCP_Write_Dint(HD114, (int)Math.Round(double.Parse(Ox) * 100));
+
+            //Y
+            TCP_Write_Dint(HD210, (int)Math.Round(double.Parse(Ay) * 100));
+            TCP_Write_Real(HD212, float.Parse(Fy));
+            TCP_Write_Dint(HD214, (int)Math.Round(double.Parse(Oy) * 100));
+
+            //Z
+            TCP_Write_Dint(HD310, (int)Math.Round(double.Parse(Az) * 100));
+            TCP_Write_Real(HD312, float.Parse(Fz));
+            TCP_Write_Dint(HD314, (int)Math.Round(double.Parse(Oz) * 100));
+
+            //R
+            TCP_Write_Dint(HD410, (int)Math.Round(double.Parse(Ar) * 100));
+            TCP_Write_Real(HD412, float.Parse(Fr));
+            TCP_Write_Dint(HD414, (int)Math.Round(double.Parse(Or) * 100));
+        }
+
+
+        private void 自动运动_Click(object sender, EventArgs e)
+        {
+            Run_Time = int.Parse(运动时间.Text);
+            Rest_Time = int.Parse(间歇时间.Text);
+            Auto_Run_Flag = true;
+            if (X方向自增_checkBox.Checked|Y方向自增_checkBox.Checked| Z方向自增_checkBox.Checked)
+            {
+                Location_Flag=true;
+            }
+
+            Ax写入值.Text = Ax_Start_textBox.Text;
+            Ay写入值.Text = Ay_Start_textBox.Text;
+            Az写入值.Text = Az_Start_textBox.Text;
+            Ar写入值.Text = Ar_Start_textBox.Text;
+
+            Fx写入值.Text = Fx_Start_textBox.Text;        
+            Fy写入值.Text = Fy_Start_textBox.Text;
+            Fz写入值.Text = Fz_Start_textBox.Text;
+            Fr写入值.Text = Fr_Start_textBox.Text;
+
+            Ox写入值.Text = Ox_Start_textBox.Text;
+            Oy写入值.Text = Oy_Start_textBox.Text;
+            Oz写入值.Text = Oz_Start_textBox.Text;
+            Or写入值.Text = Or_Start_textBox.Text;
+
+            X_GO_textBox.Text = X_Start_textBox.Text;
+            Y_GO_textBox.Text = Y_Start_textBox.Text;
+            Z_GO_textBox.Text = Z_Start_textBox.Text;
+
+            MessageBoxHelper.ShowAutoClose("自动运行开始", "操作完成", 500);
+        }
+
+        private void 停止运动_Click(object sender, EventArgs e)
+        {
+            Auto_Run_Flag=false;
+        }
+
+
+
         void Sin_Auto_Run(bool X_Flag, bool Y_Flag, bool Z_Flag, bool R_Flag)
         {
-            TCP.WriteSingleCoil(M1007, X_Flag);
-            TCP.WriteSingleCoil(M1107, Y_Flag);
-            TCP.WriteSingleCoil(M1207, Z_Flag);
-            TCP.WriteSingleCoil(M1307, R_Flag);
+            if (X_Flag) { TCP.WriteSingleCoil(M1007, true); }
+            if (Y_Flag) { TCP.WriteSingleCoil(M1107, true); }
+            if (Z_Flag) { TCP.WriteSingleCoil(M1207, true); }
+            if (R_Flag) { TCP.WriteSingleCoil(M1307, true); }
+              
         }
 
         void Sin_Auto_Stop(bool X_Flag, bool Y_Flag, bool Z_Flag, bool R_Flag)
         {
-            TCP.WriteSingleCoil(M1008, !X_Flag);
-            TCP.WriteSingleCoil(M1108, !Y_Flag);
-            TCP.WriteSingleCoil(M1208, !Z_Flag);
-            TCP.WriteSingleCoil(M1308, !R_Flag);
+            if (X_Flag) { TCP.WriteSingleCoil(M1008, false); }
+            if (Y_Flag) { TCP.WriteSingleCoil(M1108, false); }
+            if (Z_Flag) { TCP.WriteSingleCoil(M1208, false); }
+            if (R_Flag) { TCP.WriteSingleCoil(M1308, false); }
         }
 
         private void 位置增量值写入_Click(object sender, EventArgs e)
         {
+            //位置增量值写入
             X_Location_Start = int.Parse(X_Start_textBox.Text);
             Y_Location_Start = int.Parse(Y_Start_textBox.Text);
             Z_Location_Start = int.Parse(Z_Start_textBox.Text);
@@ -291,6 +430,7 @@ namespace 信捷modbus上位机
             Ar写入值.Text = (TCP_Read_Register(HD410) * 1.0 / 100).ToString();
             Fr写入值.Text = IntsToFloat(TCP.ReadHoldingRegisters(HD412, 2)).ToString();
             Or写入值.Text = (TCP_Read_Register(HD414) * 1.0 / 100).ToString();
+
             //正弦增量参数显示
             Ax_Start_textBox.Text = Ax写入值.Text;
             Ay_Start_textBox.Text = Ay写入值.Text;
@@ -350,64 +490,6 @@ namespace 信捷modbus上位机
 
         }
 
-        private void XYZ_button_Click(object sender, EventArgs e)
-        {
-            bool X_Flag = false, Y_Flag = false, Z_Flag = false;
-            if (X_textBox.Text != X_GO_textBox.Text)            //判断X点是否已在指定位置
-            {
-                TCP.WriteSingleCoil(M1005, true);
-                X_Flag = true;
-            }
-            if (Y_textBox.Text != Y_GO_textBox.Text)            //判断Y点是否已在指定位置
-            {
-                TCP.WriteSingleCoil(M1105, true);
-                Y_Flag = true;
-            }
-            if (Z_textBox.Text != Z_GO_textBox.Text)            //判断Z点是否已在指定位置
-            {
-                TCP.WriteSingleCoil(M1205, true);
-                Z_Flag = true;
-            }
-            if (X_Flag | Y_Flag | Z_Flag)
-            {
-                MessageBoxHelper.ShowAutoClose("设备正在前往指定位置", "操作完成", 1000);
-                X_Flag = Y_Flag = Z_Flag = false;
-            }
-            else
-            {
-                MessageBoxHelper.ShowAutoClose("设备已经处于目标位置", "操作失败", 1000);
-            }
-        }       //定点运动按键按下  ->  指定位置运动执行函数
-
-        private void Data_Write_button_Click(object sender, EventArgs e)        
-        {
-            数据写入标志位 = true;
-            if (TCP.Connected)
-            {
-                //位置写入
-                TCP_Write(HD104, (int)Math.Round(double.Parse(X_GO_textBox.Text) * 100));
-                TCP_Write(HD204, (int)Math.Round(double.Parse(Y_GO_textBox.Text) * 100));
-                TCP_Write(HD304, (int)Math.Round(double.Parse(Z_GO_textBox.Text) * 100));
-
-                //速度写入
-                TCP_Write(HD102, (int)Math.Round(double.Parse(X_Speed_textBox.Text) * 100));
-                TCP_Write(HD202, (int)Math.Round(double.Parse(Y_Speed_textBox.Text) * 100));
-                TCP_Write(HD302, (int)Math.Round(double.Parse(Z_Speed_textBox.Text) * 100));
-
-            }
-        }   //数据写入按键按下  ->  指定位置和运动速度写入参数
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Connect_button_Click(object sender, EventArgs e)
         {
             try
@@ -430,86 +512,24 @@ namespace 信捷modbus上位机
             {
                 MessageBoxHelper.ShowAutoClose($"连接失败: {ex.Message}", "错误");
             }
-        }           //连接按键点下，开始连接函数     ->没有对连接失败做处理
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
         }
 
-        private void label8_Click(object sender, EventArgs e)
+        private void Data_Write_button_Click(object sender, EventArgs e)        
         {
+            XYZ_Speed_Data_Write(X_GO_textBox.Text, Y_GO_textBox.Text, Z_GO_textBox.Text, X_Speed_textBox.Text, Y_Speed_textBox.Text, Z_Speed_textBox.Text);
+            XYZ_Speed_Data_Run(X_GO_textBox.Text, Y_GO_textBox.Text, Z_GO_textBox.Text);
+        }   
 
-        }
-
-        private void Timer_1s_Tick(object sender, EventArgs e)
-        {
-            bool X_Data_Write_OK = false;
-            bool Y_Data_Write_OK = false;
-            bool Z_Data_Write_OK = false;
-            if (TCP_Connect_OK)
-            {
-                Data_Time_Show();    //数据实时刷新
-
-                if (数据写入标志位)        //检测现在位置是否在指定位置
-                {
-                    if (TCP_Read_Register(HD104) == (int)Math.Round(double.Parse(X_GO_textBox.Text) * 100))
-                    {
-                        X_Data_Write_OK = true;
-                    }
-                    if (TCP_Read_Register(HD204) == (int)Math.Round(double.Parse(Y_GO_textBox.Text) * 100))
-                    {
-                        Y_Data_Write_OK = true;
-                    }
-                    if (TCP_Read_Register(HD304) == (int)Math.Round(double.Parse(Z_GO_textBox.Text) * 100))
-                    {
-                        Z_Data_Write_OK = true;
-                    }
-                    if ((X_Data_Write_OK) && (Y_Data_Write_OK) && (Z_Data_Write_OK))
-                    {
-                        数据写入标志位 = false;
-                        X_Data_Write_OK = false;
-                        Y_Data_Write_OK = false;
-                        Z_Data_Write_OK = false;
-                        MessageBoxHelper.ShowAutoClose("数据写入成功", "操作完成", 1000);
-                    }
-
-                }
-
-            }
-        }                   //秒级定时器处理函数
-
-        private void label23_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void 固定值写入_Click(object sender, EventArgs e)
         {
-            //X
-            TCP_Write(HD110, (int)Math.Round(double.Parse(Ax写入值.Text) * 100));
-            TCP_Write_Real(HD112,float.Parse(Fx写入值.Text));
-            TCP_Write(HD114, (int)Math.Round(double.Parse(Ox写入值.Text) * 100));
-
-            //Y
-            TCP_Write(HD210, (int)Math.Round(double.Parse(Ay写入值.Text) * 100));
-            TCP_Write_Real(HD212, float.Parse(Fy写入值.Text));
-            TCP_Write(HD214, (int)Math.Round(double.Parse(Oy写入值.Text) * 100));
-
-            //Z
-            TCP_Write(HD310, (int)Math.Round(double.Parse(Az写入值.Text) * 100));
-            TCP_Write_Real(HD312, float.Parse(Fz写入值.Text));
-            TCP_Write(HD314, (int)Math.Round(double.Parse(Oz写入值.Text) * 100));
-
-            //R
-            TCP_Write(HD410, (int)Math.Round(double.Parse(Ar写入值.Text) * 100));
-            TCP_Write_Real(HD412, float.Parse(Fr写入值.Text));
-            TCP_Write(HD414, (int)Math.Round(double.Parse(Or写入值.Text) * 100));
+            Sin_Data_Write(Ax写入值.Text, Fx写入值.Text,Ox写入值.Text,Ay写入值.Text,Fy写入值.Text,Oy写入值.Text, Az写入值.Text, Fz写入值.Text, Oz写入值.Text, Ar写入值.Text, Fr写入值.Text, Or写入值.Text);
             MessageBoxHelper.ShowAutoClose("固定值已经写入", "操作完成", 1000);
         }
 
         private void 增量值写入_Click(object sender, EventArgs e)
         {
+
             Ax_Start = (int)Math.Round(double.Parse(Ax_Start_textBox.Text) * 100);
             Ay_Start = (int)Math.Round(double.Parse(Ay_Start_textBox.Text) * 100);
             Az_Start = (int)Math.Round(double.Parse(Az_Start_textBox.Text) * 100);
@@ -556,8 +576,6 @@ namespace 信捷modbus上位机
             Or_Enhance = (int)Math.Round(double.Parse(Or_Enhance_textBox.Text) * 100);
 
         }
-
-
 
         private void X正弦启动_button_Click(object sender, EventArgs e)
         {
@@ -610,59 +628,215 @@ namespace 信捷modbus上位机
         private void Timer_ms_Tick(object sender, EventArgs e)
         {
             int count = 0;
-            int X_Location_Old_Value = X_Location_Start;
-            int Y_Location_Old_Value = Y_Location_Start;
-            int Z_Location_Old_Value = Z_Location_Start;
 
             if (Auto_Run_Flag == true)
             {
-                if (Location_Flag && Parameter_Flag)
-                {
-                    Auto_Run_Flag = false;
-                    MessageBoxHelper.ShowAutoClose("位置和正弦运动只能有一个的参数可以增量", "操作失败", 1000);
-                } 
-                else if (Location_Flag)
-                {
-                    count++;
-                    if (count == Run_Time)
-                    {
-                       
-                    }
-                    if (count == Run_Time + Rest_Time)
-                    {
-                        count = 0;
-                        if (X方向自增_checkBox.Checked)
-                        {
-                            if(X_Location_Old_Value>= Ax_End)
-                            {
-                                X方向自增_checkBox.Enabled = false;
-                            }
-                            X_Location_Old_Value = int.Parse(X_Start_textBox.Text) + int.Parse(X_Enhance_textBox.Text);
-                        }
-                        if (Y方向自增_checkBox.Checked)
-                        {
-                            if (Y_Location_Old_Value >= Ax_End)
-                            {
-                                X方向自增_checkBox.Enabled = false;
-                            }
-                            Y_Location_Old_Value = int.Parse(X_Start_textBox.Text) + int.Parse(X_Enhance_textBox.Text);
 
-                        }
-                        if (Z方向自增_checkBox.Checked)
+                if (Location_Flag)
+                {
+                    XYZ_Speed_Data_Run(X_GO_textBox.Text, Y_GO_textBox.Text, Z_GO_textBox.Text);
+                   
+                }
+                if (count == 0)
+                {
+
+                    if (X正弦_checkBox.Checked) { Sin_Auto_Run(true, false, false, false); }
+                    if (Y正弦_checkBox.Checked) { Sin_Auto_Run(false, true, false, false); }
+                    if (Z正弦_checkBox.Checked) { Sin_Auto_Run(false, false, true, false); }
+                    if (R正弦_checkBox.Checked) { Sin_Auto_Run(false, false, false, true); }
+
+                    if (X方向自增_checkBox.Checked)
+                    {
+                        X_GO_textBox.Text = (int.Parse(X_GO_textBox.Text) + int.Parse(X_Enhance_textBox.Text)).ToString();
+                        if (X_GO_textBox.Text == Z_End_textBox.Text)
                         {
-                            Z_Location_Old_Value = int.Parse(X_Start_textBox.Text) + int.Parse(X_Enhance_textBox.Text);
+                            X方向自增_checkBox.Enabled = false;
                         }
                     }
-                    //if ()
-                    //{
-                    //    Auto_Run_Flag = false;
-                    //}
+                    if (Y方向自增_checkBox.Checked)
+                    {
+                        Y_GO_textBox.Text = (int.Parse(Y_GO_textBox.Text) + int.Parse(Y_Enhance_textBox.Text)).ToString();
+                        if (Y_GO_textBox.Text == Y_End_textBox.Text)
+                        {
+                            Y方向自增_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Z方向自增_checkBox.Checked)
+                    {
+                        Z_GO_textBox.Text = (int.Parse(Z_GO_textBox.Text) + int.Parse(Z_Enhance_textBox.Text)).ToString();
+                        if (Z_GO_textBox.Text == Z_End_textBox.Text)
+                        {
+                            Z方向自增_checkBox.Enabled = false;
+                        }
+                    }
                 }
-                else if (Parameter_Flag)
+                count++;
+                if (count == Run_Time)
                 {
+                    Sin_Auto_Stop(false, false, false, false);
+
+
+                    if (Ax_checkBox.Checked)
+                    {
+                        Ax写入值.Text = (int.Parse(Ax_Start_textBox.Text) + int.Parse(Ax_Enhance_textBox.Text)).ToString();
+
+                        if (Ax写入值.Text == Ax_End_textBox.Text)
+                        {
+                            Ax_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Fx_checkBox.Checked)
+                    {
+                        Fx写入值.Text = (int.Parse(Fx_Start_textBox.Text) + int.Parse(Fx_Enhance_textBox.Text)).ToString();
+
+                        if (Fx写入值.Text == Fx_End_textBox.Text)
+                        {
+                            Fx_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Ox_checkBox.Checked)
+                    {
+                        Ox写入值.Text = (int.Parse(Ox_Start_textBox.Text) + int.Parse(Ox_Enhance_textBox.Text)).ToString();
+
+                        if (Ox写入值.Text == Ox_End_textBox.Text)
+                        {
+                            Ox_checkBox.Enabled = false;
+                        }
+                    }
+
+                    if (Ay_checkBox.Checked)
+                    {
+                        Ay写入值.Text = (int.Parse(Ay_Start_textBox.Text) + int.Parse(Ay_Enhance_textBox.Text)).ToString();
+
+                        if (Ay写入值.Text == Ay_End_textBox.Text)
+                        {
+                            Ay_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Fy_checkBox.Checked)
+                    {
+                        Fy写入值.Text = (int.Parse(Fy_Start_textBox.Text) + int.Parse(Fy_Enhance_textBox.Text)).ToString();
+
+                        if (Fy写入值.Text == Fy_End_textBox.Text)
+                        {
+                            Fy_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Oy_checkBox.Checked)
+                    {
+                        Oy写入值.Text = (int.Parse(Oy_Start_textBox.Text) + int.Parse(Oy_Enhance_textBox.Text)).ToString();
+
+                        if (Oy写入值.Text == Oy_End_textBox.Text)
+                        {
+                            Oy_checkBox.Enabled = false;
+                        }
+                    }
+
+                    if (Az_checkBox.Checked)
+                    {
+                        Az写入值.Text = (int.Parse(Az_Start_textBox.Text) + int.Parse(Az_Enhance_textBox.Text)).ToString();
+
+                        if (Az写入值.Text == Az_End_textBox.Text)
+                        {
+                            Az_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Fz_checkBox.Checked)
+                    {
+                        Fz写入值.Text = (int.Parse(Fz_Start_textBox.Text) + int.Parse(Fz_Enhance_textBox.Text)).ToString();
+
+                        if (Fz写入值.Text == Fz_End_textBox.Text)
+                        {
+                            Fz_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Oz_checkBox.Checked)
+                    {
+                        Oz写入值.Text = (int.Parse(Oz_Start_textBox.Text) + int.Parse(Oz_Enhance_textBox.Text)).ToString();
+
+                        if (Oz写入值.Text == Oz_End_textBox.Text)
+                        {
+                            Oz_checkBox.Enabled = false;
+                        }
+                    }
+
+                    if (Ar_checkBox.Checked)
+                    {
+                        Ar写入值.Text = (int.Parse(Ar_Start_textBox.Text) + int.Parse(Ar_Enhance_textBox.Text)).ToString();
+
+                        if (Ar写入值.Text == Ar_End_textBox.Text)
+                        {
+                            Ar_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Fr_checkBox.Checked)
+                    {
+                        Fr写入值.Text = (int.Parse(Fr_Start_textBox.Text) + int.Parse(Fr_Enhance_textBox.Text)).ToString();
+
+                        if (Fr写入值.Text == Fr_End_textBox.Text)
+                        {
+                            Fr_checkBox.Enabled = false;
+                        }
+                    }
+                    if (Or_checkBox.Checked)
+                    {
+                        Or写入值.Text = (int.Parse(Or_Start_textBox.Text) + int.Parse(Or_Enhance_textBox.Text)).ToString();
+
+                        if (Or写入值.Text == Or_End_textBox.Text)
+                        {
+                            Or_checkBox.Enabled = false;
+                        }
+                    }
+                }
+                if (count == Run_Time + Rest_Time)
+                {
+                    count = 0;
 
                 }
             }
+
+        }
+        private void Timer_1s_Tick(object sender, EventArgs e)
+        {
+
+            if (TCP_Connect_OK)
+            {
+                Data_Time_Show();    //数据实时刷新
+
+                if (Fixed_XYZ_Speed_Check == true)        //检测现在位置是否在指定位置
+                {
+                    if (XYZ_Speed_Data_Check(X_GO_textBox.Text, Y_GO_textBox.Text, Z_GO_textBox.Text, X_Speed_textBox.Text, Y_Speed_textBox.Text, Z_Speed_textBox.Text))
+                    {
+                        Fixed_XYZ_Speed_Check = false;
+                        MessageBoxHelper.ShowAutoClose("移动到指定位置", "操作完成", 500);
+                    }
+                }
+
+            }
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label23_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }
