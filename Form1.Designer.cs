@@ -149,7 +149,6 @@
             this.label43 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.固定值写入 = new System.Windows.Forms.Button();
-            this.增量值写入 = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -176,7 +175,6 @@
             this.Y方向自增_checkBox = new System.Windows.Forms.CheckBox();
             this.X方向自增_checkBox = new System.Windows.Forms.CheckBox();
             this.label54 = new System.Windows.Forms.Label();
-            this.Timer_ms = new System.Windows.Forms.Timer(this.components);
             this.X正弦_checkBox = new System.Windows.Forms.CheckBox();
             this.Y正弦_checkBox = new System.Windows.Forms.CheckBox();
             this.Z正弦_checkBox = new System.Windows.Forms.CheckBox();
@@ -197,7 +195,6 @@
             this.R正弦启动_button = new System.Windows.Forms.Button();
             this.R正弦停止_button = new System.Windows.Forms.Button();
             this.label57 = new System.Windows.Forms.Label();
-            this.位置增量值写入 = new System.Windows.Forms.Button();
             this.Ar_checkBox = new System.Windows.Forms.CheckBox();
             this.Az_checkBox = new System.Windows.Forms.CheckBox();
             this.Ay_checkBox = new System.Windows.Forms.CheckBox();
@@ -210,6 +207,8 @@
             this.Oz_checkBox = new System.Windows.Forms.CheckBox();
             this.Oy_checkBox = new System.Windows.Forms.CheckBox();
             this.Ox_checkBox = new System.Windows.Forms.CheckBox();
+            this.Timer_Run = new System.Windows.Forms.Timer(this.components);
+            this.Timer_Rest = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -1151,16 +1150,6 @@
             this.固定值写入.UseVisualStyleBackColor = true;
             this.固定值写入.Click += new System.EventHandler(this.固定值写入_Click);
             // 
-            // 增量值写入
-            // 
-            this.增量值写入.Location = new System.Drawing.Point(1595, 512);
-            this.增量值写入.Name = "增量值写入";
-            this.增量值写入.Size = new System.Drawing.Size(116, 30);
-            this.增量值写入.TabIndex = 211;
-            this.增量值写入.Text = "增量值写入";
-            this.增量值写入.UseVisualStyleBackColor = true;
-            this.增量值写入.Click += new System.EventHandler(this.增量值写入_Click);
-            // 
             // label21
             // 
             this.label21.AutoSize = true;
@@ -1385,12 +1374,6 @@
             this.label54.TabIndex = 254;
             this.label54.Text = "ms";
             // 
-            // Timer_ms
-            // 
-            this.Timer_ms.Enabled = true;
-            this.Timer_ms.Interval = 1;
-            this.Timer_ms.Tick += new System.EventHandler(this.Timer_ms_Tick);
-            // 
             // X正弦_checkBox
             // 
             this.X正弦_checkBox.AutoSize = true;
@@ -1578,16 +1561,6 @@
             this.label57.Size = new System.Drawing.Size(0, 18);
             this.label57.TabIndex = 270;
             // 
-            // 位置增量值写入
-            // 
-            this.位置增量值写入.Location = new System.Drawing.Point(373, 602);
-            this.位置增量值写入.Name = "位置增量值写入";
-            this.位置增量值写入.Size = new System.Drawing.Size(179, 51);
-            this.位置增量值写入.TabIndex = 273;
-            this.位置增量值写入.Text = "位置增量值写入";
-            this.位置增量值写入.UseVisualStyleBackColor = true;
-            this.位置增量值写入.Click += new System.EventHandler(this.位置增量值写入_Click);
-            // 
             // Ar_checkBox
             // 
             this.Ar_checkBox.AutoSize = true;
@@ -1708,6 +1681,14 @@
             this.Ox_checkBox.Text = "Ox自增";
             this.Ox_checkBox.UseVisualStyleBackColor = true;
             // 
+            // Timer_Run
+            // 
+            this.Timer_Run.Tick += new System.EventHandler(this.Timer_Run_Tick);
+            // 
+            // Timer_Rest
+            // 
+            this.Timer_Rest.Tick += new System.EventHandler(this.Timer_Rest_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -1725,7 +1706,6 @@
             this.Controls.Add(this.Az_checkBox);
             this.Controls.Add(this.Ay_checkBox);
             this.Controls.Add(this.Ax_checkBox);
-            this.Controls.Add(this.位置增量值写入);
             this.Controls.Add(this.R正弦启动_button);
             this.Controls.Add(this.R正弦停止_button);
             this.Controls.Add(this.label57);
@@ -1772,7 +1752,6 @@
             this.Controls.Add(this.Y正弦_checkBox);
             this.Controls.Add(this.X正弦_checkBox);
             this.Controls.Add(this.label21);
-            this.Controls.Add(this.增量值写入);
             this.Controls.Add(this.固定值写入);
             this.Controls.Add(this.label42);
             this.Controls.Add(this.label43);
@@ -2022,7 +2001,6 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Button 固定值写入;
-        private System.Windows.Forms.Button 增量值写入;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
@@ -2049,7 +2027,6 @@
         private System.Windows.Forms.CheckBox Y方向自增_checkBox;
         private System.Windows.Forms.CheckBox X方向自增_checkBox;
         private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.Timer Timer_ms;
         private System.Windows.Forms.CheckBox X正弦_checkBox;
         private System.Windows.Forms.CheckBox Y正弦_checkBox;
         private System.Windows.Forms.CheckBox Z正弦_checkBox;
@@ -2070,7 +2047,6 @@
         private System.Windows.Forms.Button R正弦启动_button;
         private System.Windows.Forms.Button R正弦停止_button;
         private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.Button 位置增量值写入;
         private System.Windows.Forms.CheckBox Ar_checkBox;
         private System.Windows.Forms.CheckBox Az_checkBox;
         private System.Windows.Forms.CheckBox Ay_checkBox;
@@ -2083,6 +2059,8 @@
         private System.Windows.Forms.CheckBox Oz_checkBox;
         private System.Windows.Forms.CheckBox Oy_checkBox;
         private System.Windows.Forms.CheckBox Ox_checkBox;
+        private System.Windows.Forms.Timer Timer_Run;
+        private System.Windows.Forms.Timer Timer_Rest;
     }
 }
 
