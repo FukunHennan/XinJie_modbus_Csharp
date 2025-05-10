@@ -38,7 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.XYZ_button = new System.Windows.Forms.Button();
             this.IP_textBox = new System.Windows.Forms.TextBox();
             this.Port_textBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -150,7 +149,6 @@
             this.label43 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.固定值写入 = new System.Windows.Forms.Button();
-            this.增量值写入 = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -177,7 +175,6 @@
             this.Y方向自增_checkBox = new System.Windows.Forms.CheckBox();
             this.X方向自增_checkBox = new System.Windows.Forms.CheckBox();
             this.label54 = new System.Windows.Forms.Label();
-            this.Timer_ms = new System.Windows.Forms.Timer(this.components);
             this.X正弦_checkBox = new System.Windows.Forms.CheckBox();
             this.Y正弦_checkBox = new System.Windows.Forms.CheckBox();
             this.Z正弦_checkBox = new System.Windows.Forms.CheckBox();
@@ -198,7 +195,20 @@
             this.R正弦启动_button = new System.Windows.Forms.Button();
             this.R正弦停止_button = new System.Windows.Forms.Button();
             this.label57 = new System.Windows.Forms.Label();
-            this.位置增量值写入 = new System.Windows.Forms.Button();
+            this.Ar_checkBox = new System.Windows.Forms.CheckBox();
+            this.Az_checkBox = new System.Windows.Forms.CheckBox();
+            this.Ay_checkBox = new System.Windows.Forms.CheckBox();
+            this.Ax_checkBox = new System.Windows.Forms.CheckBox();
+            this.Fr_checkBox = new System.Windows.Forms.CheckBox();
+            this.Fz_checkBox = new System.Windows.Forms.CheckBox();
+            this.Fy_checkBox = new System.Windows.Forms.CheckBox();
+            this.Fx_checkBox = new System.Windows.Forms.CheckBox();
+            this.Or_checkBox = new System.Windows.Forms.CheckBox();
+            this.Oz_checkBox = new System.Windows.Forms.CheckBox();
+            this.Oy_checkBox = new System.Windows.Forms.CheckBox();
+            this.Ox_checkBox = new System.Windows.Forms.CheckBox();
+            this.Timer_Run = new System.Windows.Forms.Timer(this.components);
+            this.Timer_Rest = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -279,16 +289,6 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Z目前位置";
             this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // XYZ_button
-            // 
-            this.XYZ_button.Location = new System.Drawing.Point(529, 301);
-            this.XYZ_button.Name = "XYZ_button";
-            this.XYZ_button.Size = new System.Drawing.Size(106, 33);
-            this.XYZ_button.TabIndex = 9;
-            this.XYZ_button.Text = "定点运动";
-            this.XYZ_button.UseVisualStyleBackColor = true;
-            this.XYZ_button.Click += new System.EventHandler(this.XYZ_button_Click);
             // 
             // IP_textBox
             // 
@@ -411,11 +411,11 @@
             // 
             // Data_Write_button
             // 
-            this.Data_Write_button.Location = new System.Drawing.Point(318, 304);
+            this.Data_Write_button.Location = new System.Drawing.Point(425, 279);
             this.Data_Write_button.Name = "Data_Write_button";
-            this.Data_Write_button.Size = new System.Drawing.Size(117, 33);
+            this.Data_Write_button.Size = new System.Drawing.Size(95, 33);
             this.Data_Write_button.TabIndex = 25;
-            this.Data_Write_button.Text = "数据写入";
+            this.Data_Write_button.Text = "执行";
             this.Data_Write_button.UseVisualStyleBackColor = true;
             this.Data_Write_button.Click += new System.EventHandler(this.Data_Write_button_Click);
             // 
@@ -504,7 +504,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(1132, 350);
+            this.label27.Location = new System.Drawing.Point(999, 357);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(26, 18);
             this.label27.TabIndex = 53;
@@ -513,7 +513,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(1132, 316);
+            this.label28.Location = new System.Drawing.Point(999, 323);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(26, 18);
             this.label28.TabIndex = 52;
@@ -522,7 +522,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(1132, 282);
+            this.label29.Location = new System.Drawing.Point(999, 289);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(26, 18);
             this.label29.TabIndex = 51;
@@ -531,7 +531,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(1624, 22);
+            this.label33.Location = new System.Drawing.Point(1491, 29);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(44, 18);
             this.label33.TabIndex = 68;
@@ -539,7 +539,7 @@
             // 
             // Ax_End_textBox
             // 
-            this.Ax_End_textBox.Location = new System.Drawing.Point(1610, 64);
+            this.Ax_End_textBox.Location = new System.Drawing.Point(1477, 71);
             this.Ax_End_textBox.Name = "Ax_End_textBox";
             this.Ax_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ax_End_textBox.TabIndex = 67;
@@ -547,7 +547,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(1475, 22);
+            this.label34.Location = new System.Drawing.Point(1342, 29);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(62, 18);
             this.label34.TabIndex = 66;
@@ -556,7 +556,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(1320, 22);
+            this.label35.Location = new System.Drawing.Point(1187, 29);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(62, 18);
             this.label35.TabIndex = 65;
@@ -564,14 +564,14 @@
             // 
             // Ax_Enhance_textBox
             // 
-            this.Ax_Enhance_textBox.Location = new System.Drawing.Point(1459, 64);
+            this.Ax_Enhance_textBox.Location = new System.Drawing.Point(1326, 71);
             this.Ax_Enhance_textBox.Name = "Ax_Enhance_textBox";
             this.Ax_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ax_Enhance_textBox.TabIndex = 64;
             // 
             // Ax_Start_textBox
             // 
-            this.Ax_Start_textBox.Location = new System.Drawing.Point(1305, 64);
+            this.Ax_Start_textBox.Location = new System.Drawing.Point(1172, 71);
             this.Ax_Start_textBox.Name = "Ax_Start_textBox";
             this.Ax_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ax_Start_textBox.TabIndex = 63;
@@ -579,7 +579,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(1132, 67);
+            this.label36.Location = new System.Drawing.Point(999, 74);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(26, 18);
             this.label36.TabIndex = 62;
@@ -587,28 +587,28 @@
             // 
             // Ax写入值
             // 
-            this.Ax写入值.Location = new System.Drawing.Point(1164, 64);
+            this.Ax写入值.Location = new System.Drawing.Point(1031, 71);
             this.Ax写入值.Name = "Ax写入值";
             this.Ax写入值.Size = new System.Drawing.Size(100, 28);
             this.Ax写入值.TabIndex = 61;
             // 
             // Fx_End_textBox
             // 
-            this.Fx_End_textBox.Location = new System.Drawing.Point(1610, 98);
+            this.Fx_End_textBox.Location = new System.Drawing.Point(1477, 105);
             this.Fx_End_textBox.Name = "Fx_End_textBox";
             this.Fx_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fx_End_textBox.TabIndex = 75;
             // 
             // Fx_Enhance_textBox
             // 
-            this.Fx_Enhance_textBox.Location = new System.Drawing.Point(1459, 98);
+            this.Fx_Enhance_textBox.Location = new System.Drawing.Point(1326, 105);
             this.Fx_Enhance_textBox.Name = "Fx_Enhance_textBox";
             this.Fx_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fx_Enhance_textBox.TabIndex = 72;
             // 
             // Fx_Start_textBox
             // 
-            this.Fx_Start_textBox.Location = new System.Drawing.Point(1305, 98);
+            this.Fx_Start_textBox.Location = new System.Drawing.Point(1172, 105);
             this.Fx_Start_textBox.Name = "Fx_Start_textBox";
             this.Fx_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fx_Start_textBox.TabIndex = 71;
@@ -616,7 +616,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(1132, 101);
+            this.label40.Location = new System.Drawing.Point(999, 108);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(26, 18);
             this.label40.TabIndex = 70;
@@ -624,28 +624,28 @@
             // 
             // Fx写入值
             // 
-            this.Fx写入值.Location = new System.Drawing.Point(1164, 98);
+            this.Fx写入值.Location = new System.Drawing.Point(1031, 105);
             this.Fx写入值.Name = "Fx写入值";
             this.Fx写入值.Size = new System.Drawing.Size(100, 28);
             this.Fx写入值.TabIndex = 69;
             // 
             // Ox_End_textBox
             // 
-            this.Ox_End_textBox.Location = new System.Drawing.Point(1610, 132);
+            this.Ox_End_textBox.Location = new System.Drawing.Point(1477, 139);
             this.Ox_End_textBox.Name = "Ox_End_textBox";
             this.Ox_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ox_End_textBox.TabIndex = 83;
             // 
             // Ox_Enhance_textBox
             // 
-            this.Ox_Enhance_textBox.Location = new System.Drawing.Point(1459, 132);
+            this.Ox_Enhance_textBox.Location = new System.Drawing.Point(1326, 139);
             this.Ox_Enhance_textBox.Name = "Ox_Enhance_textBox";
             this.Ox_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ox_Enhance_textBox.TabIndex = 80;
             // 
             // Ox_Start_textBox
             // 
-            this.Ox_Start_textBox.Location = new System.Drawing.Point(1305, 132);
+            this.Ox_Start_textBox.Location = new System.Drawing.Point(1172, 139);
             this.Ox_Start_textBox.Name = "Ox_Start_textBox";
             this.Ox_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ox_Start_textBox.TabIndex = 79;
@@ -653,7 +653,7 @@
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(1132, 135);
+            this.label44.Location = new System.Drawing.Point(999, 142);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(26, 18);
             this.label44.TabIndex = 78;
@@ -661,203 +661,203 @@
             // 
             // Ox写入值
             // 
-            this.Ox写入值.Location = new System.Drawing.Point(1164, 132);
+            this.Ox写入值.Location = new System.Drawing.Point(1031, 139);
             this.Ox写入值.Name = "Ox写入值";
             this.Ox写入值.Size = new System.Drawing.Size(100, 28);
             this.Ox写入值.TabIndex = 77;
             // 
             // Ay_End_textBox
             // 
-            this.Ay_End_textBox.Location = new System.Drawing.Point(1610, 172);
+            this.Ay_End_textBox.Location = new System.Drawing.Point(1477, 179);
             this.Ay_End_textBox.Name = "Ay_End_textBox";
             this.Ay_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ay_End_textBox.TabIndex = 91;
             // 
             // Ay_Enhance_textBox
             // 
-            this.Ay_Enhance_textBox.Location = new System.Drawing.Point(1459, 172);
+            this.Ay_Enhance_textBox.Location = new System.Drawing.Point(1326, 179);
             this.Ay_Enhance_textBox.Name = "Ay_Enhance_textBox";
             this.Ay_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ay_Enhance_textBox.TabIndex = 88;
             // 
             // Ay_Start_textBox
             // 
-            this.Ay_Start_textBox.Location = new System.Drawing.Point(1305, 172);
+            this.Ay_Start_textBox.Location = new System.Drawing.Point(1172, 179);
             this.Ay_Start_textBox.Name = "Ay_Start_textBox";
             this.Ay_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ay_Start_textBox.TabIndex = 87;
             // 
             // Ay写入值
             // 
-            this.Ay写入值.Location = new System.Drawing.Point(1164, 172);
+            this.Ay写入值.Location = new System.Drawing.Point(1031, 179);
             this.Ay写入值.Name = "Ay写入值";
             this.Ay写入值.Size = new System.Drawing.Size(100, 28);
             this.Ay写入值.TabIndex = 85;
             // 
             // Fy_End_textBox
             // 
-            this.Fy_End_textBox.Location = new System.Drawing.Point(1610, 211);
+            this.Fy_End_textBox.Location = new System.Drawing.Point(1477, 218);
             this.Fy_End_textBox.Name = "Fy_End_textBox";
             this.Fy_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fy_End_textBox.TabIndex = 99;
             // 
             // Fy_Enhance_textBox
             // 
-            this.Fy_Enhance_textBox.Location = new System.Drawing.Point(1459, 211);
+            this.Fy_Enhance_textBox.Location = new System.Drawing.Point(1326, 218);
             this.Fy_Enhance_textBox.Name = "Fy_Enhance_textBox";
             this.Fy_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fy_Enhance_textBox.TabIndex = 96;
             // 
             // Fy_Start_textBox
             // 
-            this.Fy_Start_textBox.Location = new System.Drawing.Point(1305, 211);
+            this.Fy_Start_textBox.Location = new System.Drawing.Point(1172, 218);
             this.Fy_Start_textBox.Name = "Fy_Start_textBox";
             this.Fy_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fy_Start_textBox.TabIndex = 95;
             // 
             // Fy写入值
             // 
-            this.Fy写入值.Location = new System.Drawing.Point(1164, 211);
+            this.Fy写入值.Location = new System.Drawing.Point(1031, 218);
             this.Fy写入值.Name = "Fy写入值";
             this.Fy写入值.Size = new System.Drawing.Size(100, 28);
             this.Fy写入值.TabIndex = 93;
             // 
             // Oy_End_textBox
             // 
-            this.Oy_End_textBox.Location = new System.Drawing.Point(1610, 245);
+            this.Oy_End_textBox.Location = new System.Drawing.Point(1477, 252);
             this.Oy_End_textBox.Name = "Oy_End_textBox";
             this.Oy_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oy_End_textBox.TabIndex = 107;
             // 
             // Oy_Enhance_textBox
             // 
-            this.Oy_Enhance_textBox.Location = new System.Drawing.Point(1459, 245);
+            this.Oy_Enhance_textBox.Location = new System.Drawing.Point(1326, 252);
             this.Oy_Enhance_textBox.Name = "Oy_Enhance_textBox";
             this.Oy_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oy_Enhance_textBox.TabIndex = 104;
             // 
             // Oy_Start_textBox
             // 
-            this.Oy_Start_textBox.Location = new System.Drawing.Point(1305, 245);
+            this.Oy_Start_textBox.Location = new System.Drawing.Point(1172, 252);
             this.Oy_Start_textBox.Name = "Oy_Start_textBox";
             this.Oy_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oy_Start_textBox.TabIndex = 103;
             // 
             // Oy写入值
             // 
-            this.Oy写入值.Location = new System.Drawing.Point(1164, 245);
+            this.Oy写入值.Location = new System.Drawing.Point(1031, 252);
             this.Oy写入值.Name = "Oy写入值";
             this.Oy写入值.Size = new System.Drawing.Size(100, 28);
             this.Oy写入值.TabIndex = 101;
             // 
             // Az_End_textBox
             // 
-            this.Az_End_textBox.Location = new System.Drawing.Point(1610, 279);
+            this.Az_End_textBox.Location = new System.Drawing.Point(1477, 286);
             this.Az_End_textBox.Name = "Az_End_textBox";
             this.Az_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Az_End_textBox.TabIndex = 115;
             // 
             // Az_Enhance_textBox
             // 
-            this.Az_Enhance_textBox.Location = new System.Drawing.Point(1459, 279);
+            this.Az_Enhance_textBox.Location = new System.Drawing.Point(1326, 286);
             this.Az_Enhance_textBox.Name = "Az_Enhance_textBox";
             this.Az_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Az_Enhance_textBox.TabIndex = 112;
             // 
             // Az_Start_textBox
             // 
-            this.Az_Start_textBox.Location = new System.Drawing.Point(1305, 279);
+            this.Az_Start_textBox.Location = new System.Drawing.Point(1172, 286);
             this.Az_Start_textBox.Name = "Az_Start_textBox";
             this.Az_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Az_Start_textBox.TabIndex = 111;
             // 
             // Az写入值
             // 
-            this.Az写入值.Location = new System.Drawing.Point(1164, 279);
+            this.Az写入值.Location = new System.Drawing.Point(1031, 286);
             this.Az写入值.Name = "Az写入值";
             this.Az写入值.Size = new System.Drawing.Size(100, 28);
             this.Az写入值.TabIndex = 109;
             // 
             // Fz_End_textBox
             // 
-            this.Fz_End_textBox.Location = new System.Drawing.Point(1610, 313);
+            this.Fz_End_textBox.Location = new System.Drawing.Point(1477, 320);
             this.Fz_End_textBox.Name = "Fz_End_textBox";
             this.Fz_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fz_End_textBox.TabIndex = 123;
             // 
             // Fz_Enhance_textBox
             // 
-            this.Fz_Enhance_textBox.Location = new System.Drawing.Point(1459, 313);
+            this.Fz_Enhance_textBox.Location = new System.Drawing.Point(1326, 320);
             this.Fz_Enhance_textBox.Name = "Fz_Enhance_textBox";
             this.Fz_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fz_Enhance_textBox.TabIndex = 120;
             // 
             // Fz_Start_textBox
             // 
-            this.Fz_Start_textBox.Location = new System.Drawing.Point(1305, 313);
+            this.Fz_Start_textBox.Location = new System.Drawing.Point(1172, 320);
             this.Fz_Start_textBox.Name = "Fz_Start_textBox";
             this.Fz_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fz_Start_textBox.TabIndex = 119;
             // 
             // Fz写入值
             // 
-            this.Fz写入值.Location = new System.Drawing.Point(1164, 313);
+            this.Fz写入值.Location = new System.Drawing.Point(1031, 320);
             this.Fz写入值.Name = "Fz写入值";
             this.Fz写入值.Size = new System.Drawing.Size(100, 28);
             this.Fz写入值.TabIndex = 117;
             // 
             // Oz_End_textBox
             // 
-            this.Oz_End_textBox.Location = new System.Drawing.Point(1610, 347);
+            this.Oz_End_textBox.Location = new System.Drawing.Point(1477, 354);
             this.Oz_End_textBox.Name = "Oz_End_textBox";
             this.Oz_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oz_End_textBox.TabIndex = 131;
             // 
             // Oz_Enhance_textBox
             // 
-            this.Oz_Enhance_textBox.Location = new System.Drawing.Point(1459, 347);
+            this.Oz_Enhance_textBox.Location = new System.Drawing.Point(1326, 354);
             this.Oz_Enhance_textBox.Name = "Oz_Enhance_textBox";
             this.Oz_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oz_Enhance_textBox.TabIndex = 128;
             // 
             // Oz_Start_textBox
             // 
-            this.Oz_Start_textBox.Location = new System.Drawing.Point(1305, 347);
+            this.Oz_Start_textBox.Location = new System.Drawing.Point(1172, 354);
             this.Oz_Start_textBox.Name = "Oz_Start_textBox";
             this.Oz_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oz_Start_textBox.TabIndex = 127;
             // 
             // Oz写入值
             // 
-            this.Oz写入值.Location = new System.Drawing.Point(1164, 347);
+            this.Oz写入值.Location = new System.Drawing.Point(1031, 354);
             this.Oz写入值.Name = "Oz写入值";
             this.Oz写入值.Size = new System.Drawing.Size(100, 28);
             this.Oz写入值.TabIndex = 125;
             // 
             // Ar_End_textBox
             // 
-            this.Ar_End_textBox.Location = new System.Drawing.Point(1610, 381);
+            this.Ar_End_textBox.Location = new System.Drawing.Point(1477, 388);
             this.Ar_End_textBox.Name = "Ar_End_textBox";
             this.Ar_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ar_End_textBox.TabIndex = 139;
             // 
             // Ar_Enhance_textBox
             // 
-            this.Ar_Enhance_textBox.Location = new System.Drawing.Point(1459, 381);
+            this.Ar_Enhance_textBox.Location = new System.Drawing.Point(1326, 388);
             this.Ar_Enhance_textBox.Name = "Ar_Enhance_textBox";
             this.Ar_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ar_Enhance_textBox.TabIndex = 136;
             // 
             // Ar_Start_textBox
             // 
-            this.Ar_Start_textBox.Location = new System.Drawing.Point(1305, 381);
+            this.Ar_Start_textBox.Location = new System.Drawing.Point(1172, 388);
             this.Ar_Start_textBox.Name = "Ar_Start_textBox";
             this.Ar_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ar_Start_textBox.TabIndex = 135;
             // 
             // Ar写入值
             // 
-            this.Ar写入值.Location = new System.Drawing.Point(1164, 381);
+            this.Ar写入值.Location = new System.Drawing.Point(1031, 388);
             this.Ar写入值.Name = "Ar写入值";
             this.Ar写入值.Size = new System.Drawing.Size(100, 28);
             this.Ar写入值.TabIndex = 133;
@@ -939,63 +939,63 @@
             // 
             // Ar_Time_textBox
             // 
-            this.Ar_Time_textBox.Location = new System.Drawing.Point(1744, 381);
+            this.Ar_Time_textBox.Location = new System.Drawing.Point(1611, 388);
             this.Ar_Time_textBox.Name = "Ar_Time_textBox";
             this.Ar_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ar_Time_textBox.TabIndex = 161;
             // 
             // Oz_Time_textBox
             // 
-            this.Oz_Time_textBox.Location = new System.Drawing.Point(1744, 347);
+            this.Oz_Time_textBox.Location = new System.Drawing.Point(1611, 354);
             this.Oz_Time_textBox.Name = "Oz_Time_textBox";
             this.Oz_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oz_Time_textBox.TabIndex = 160;
             // 
             // Fz_Time_textBox
             // 
-            this.Fz_Time_textBox.Location = new System.Drawing.Point(1744, 313);
+            this.Fz_Time_textBox.Location = new System.Drawing.Point(1611, 320);
             this.Fz_Time_textBox.Name = "Fz_Time_textBox";
             this.Fz_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fz_Time_textBox.TabIndex = 159;
             // 
             // Az_Time_textBox
             // 
-            this.Az_Time_textBox.Location = new System.Drawing.Point(1744, 279);
+            this.Az_Time_textBox.Location = new System.Drawing.Point(1611, 286);
             this.Az_Time_textBox.Name = "Az_Time_textBox";
             this.Az_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Az_Time_textBox.TabIndex = 158;
             // 
             // Oy_Time_textBox
             // 
-            this.Oy_Time_textBox.Location = new System.Drawing.Point(1744, 245);
+            this.Oy_Time_textBox.Location = new System.Drawing.Point(1611, 252);
             this.Oy_Time_textBox.Name = "Oy_Time_textBox";
             this.Oy_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Oy_Time_textBox.TabIndex = 157;
             // 
             // Fy_Time_textBox
             // 
-            this.Fy_Time_textBox.Location = new System.Drawing.Point(1744, 211);
+            this.Fy_Time_textBox.Location = new System.Drawing.Point(1611, 218);
             this.Fy_Time_textBox.Name = "Fy_Time_textBox";
             this.Fy_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fy_Time_textBox.TabIndex = 156;
             // 
             // Ay_Time_textBox
             // 
-            this.Ay_Time_textBox.Location = new System.Drawing.Point(1744, 172);
+            this.Ay_Time_textBox.Location = new System.Drawing.Point(1611, 179);
             this.Ay_Time_textBox.Name = "Ay_Time_textBox";
             this.Ay_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ay_Time_textBox.TabIndex = 155;
             // 
             // Ox_Time_textBox
             // 
-            this.Ox_Time_textBox.Location = new System.Drawing.Point(1744, 132);
+            this.Ox_Time_textBox.Location = new System.Drawing.Point(1611, 139);
             this.Ox_Time_textBox.Name = "Ox_Time_textBox";
             this.Ox_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ox_Time_textBox.TabIndex = 154;
             // 
             // Fx_Time_textBox
             // 
-            this.Fx_Time_textBox.Location = new System.Drawing.Point(1744, 98);
+            this.Fx_Time_textBox.Location = new System.Drawing.Point(1611, 105);
             this.Fx_Time_textBox.Name = "Fx_Time_textBox";
             this.Fx_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fx_Time_textBox.TabIndex = 153;
@@ -1003,7 +1003,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(1758, 22);
+            this.label37.Location = new System.Drawing.Point(1625, 29);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(62, 18);
             this.label37.TabIndex = 152;
@@ -1011,77 +1011,77 @@
             // 
             // Ax_Time_textBox
             // 
-            this.Ax_Time_textBox.Location = new System.Drawing.Point(1744, 64);
+            this.Ax_Time_textBox.Location = new System.Drawing.Point(1611, 71);
             this.Ax_Time_textBox.Name = "Ax_Time_textBox";
             this.Ax_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Ax_Time_textBox.TabIndex = 151;
             // 
             // Or_Time_textBox
             // 
-            this.Or_Time_textBox.Location = new System.Drawing.Point(1744, 454);
+            this.Or_Time_textBox.Location = new System.Drawing.Point(1611, 461);
             this.Or_Time_textBox.Name = "Or_Time_textBox";
             this.Or_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Or_Time_textBox.TabIndex = 198;
             // 
             // Fr_Time_textBox
             // 
-            this.Fr_Time_textBox.Location = new System.Drawing.Point(1744, 415);
+            this.Fr_Time_textBox.Location = new System.Drawing.Point(1611, 422);
             this.Fr_Time_textBox.Name = "Fr_Time_textBox";
             this.Fr_Time_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fr_Time_textBox.TabIndex = 197;
             // 
             // Or_End_textBox
             // 
-            this.Or_End_textBox.Location = new System.Drawing.Point(1610, 454);
+            this.Or_End_textBox.Location = new System.Drawing.Point(1477, 461);
             this.Or_End_textBox.Name = "Or_End_textBox";
             this.Or_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Or_End_textBox.TabIndex = 171;
             // 
             // Or_Enhance_textBox
             // 
-            this.Or_Enhance_textBox.Location = new System.Drawing.Point(1459, 454);
+            this.Or_Enhance_textBox.Location = new System.Drawing.Point(1326, 461);
             this.Or_Enhance_textBox.Name = "Or_Enhance_textBox";
             this.Or_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Or_Enhance_textBox.TabIndex = 170;
             // 
             // Or_Start_textBox
             // 
-            this.Or_Start_textBox.Location = new System.Drawing.Point(1305, 454);
+            this.Or_Start_textBox.Location = new System.Drawing.Point(1172, 461);
             this.Or_Start_textBox.Name = "Or_Start_textBox";
             this.Or_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Or_Start_textBox.TabIndex = 169;
             // 
             // Or写入值
             // 
-            this.Or写入值.Location = new System.Drawing.Point(1164, 454);
+            this.Or写入值.Location = new System.Drawing.Point(1031, 461);
             this.Or写入值.Name = "Or写入值";
             this.Or写入值.Size = new System.Drawing.Size(100, 28);
             this.Or写入值.TabIndex = 167;
             // 
             // Fr_End_textBox
             // 
-            this.Fr_End_textBox.Location = new System.Drawing.Point(1610, 415);
+            this.Fr_End_textBox.Location = new System.Drawing.Point(1477, 422);
             this.Fr_End_textBox.Name = "Fr_End_textBox";
             this.Fr_End_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fr_End_textBox.TabIndex = 166;
             // 
             // Fr_Enhance_textBox
             // 
-            this.Fr_Enhance_textBox.Location = new System.Drawing.Point(1459, 415);
+            this.Fr_Enhance_textBox.Location = new System.Drawing.Point(1326, 422);
             this.Fr_Enhance_textBox.Name = "Fr_Enhance_textBox";
             this.Fr_Enhance_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fr_Enhance_textBox.TabIndex = 165;
             // 
             // Fr_Start_textBox
             // 
-            this.Fr_Start_textBox.Location = new System.Drawing.Point(1305, 415);
+            this.Fr_Start_textBox.Location = new System.Drawing.Point(1172, 422);
             this.Fr_Start_textBox.Name = "Fr_Start_textBox";
             this.Fr_Start_textBox.Size = new System.Drawing.Size(100, 28);
             this.Fr_Start_textBox.TabIndex = 164;
             // 
             // Fr写入值
             // 
-            this.Fr写入值.Location = new System.Drawing.Point(1164, 415);
+            this.Fr写入值.Location = new System.Drawing.Point(1031, 422);
             this.Fr写入值.Name = "Fr写入值";
             this.Fr写入值.Size = new System.Drawing.Size(100, 28);
             this.Fr写入值.TabIndex = 162;
@@ -1089,7 +1089,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(1132, 245);
+            this.label38.Location = new System.Drawing.Point(999, 252);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(26, 18);
             this.label38.TabIndex = 206;
@@ -1098,7 +1098,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(1132, 215);
+            this.label39.Location = new System.Drawing.Point(999, 222);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(26, 18);
             this.label39.TabIndex = 205;
@@ -1107,7 +1107,7 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(1132, 175);
+            this.label41.Location = new System.Drawing.Point(999, 182);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(26, 18);
             this.label41.TabIndex = 204;
@@ -1116,7 +1116,7 @@
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(1132, 464);
+            this.label42.Location = new System.Drawing.Point(999, 471);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(26, 18);
             this.label42.TabIndex = 209;
@@ -1125,7 +1125,7 @@
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(1132, 418);
+            this.label43.Location = new System.Drawing.Point(999, 425);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(26, 18);
             this.label43.TabIndex = 208;
@@ -1134,7 +1134,7 @@
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(1132, 384);
+            this.label45.Location = new System.Drawing.Point(999, 391);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(26, 18);
             this.label45.TabIndex = 207;
@@ -1142,7 +1142,7 @@
             // 
             // 固定值写入
             // 
-            this.固定值写入.Location = new System.Drawing.Point(1164, 505);
+            this.固定值写入.Location = new System.Drawing.Point(1031, 512);
             this.固定值写入.Name = "固定值写入";
             this.固定值写入.Size = new System.Drawing.Size(106, 30);
             this.固定值写入.TabIndex = 210;
@@ -1150,20 +1150,10 @@
             this.固定值写入.UseVisualStyleBackColor = true;
             this.固定值写入.Click += new System.EventHandler(this.固定值写入_Click);
             // 
-            // 增量值写入
-            // 
-            this.增量值写入.Location = new System.Drawing.Point(1728, 505);
-            this.增量值写入.Name = "增量值写入";
-            this.增量值写入.Size = new System.Drawing.Size(116, 30);
-            this.增量值写入.TabIndex = 211;
-            this.增量值写入.Text = "增量值写入";
-            this.增量值写入.UseVisualStyleBackColor = true;
-            this.增量值写入.Click += new System.EventHandler(this.增量值写入_Click);
-            // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(1183, 22);
+            this.label21.Location = new System.Drawing.Point(1050, 29);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(62, 18);
             this.label21.TabIndex = 212;
@@ -1321,7 +1311,7 @@
             // 
             // 自动运动
             // 
-            this.自动运动.Location = new System.Drawing.Point(868, 756);
+            this.自动运动.Location = new System.Drawing.Point(857, 725);
             this.自动运动.Name = "自动运动";
             this.自动运动.Size = new System.Drawing.Size(100, 33);
             this.自动运动.TabIndex = 250;
@@ -1332,7 +1322,7 @@
             // label53
             // 
             this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(565, 813);
+            this.label53.Location = new System.Drawing.Point(554, 782);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(80, 18);
             this.label53.TabIndex = 249;
@@ -1340,7 +1330,7 @@
             // 
             // 间歇时间
             // 
-            this.间歇时间.Location = new System.Drawing.Point(651, 810);
+            this.间歇时间.Location = new System.Drawing.Point(640, 779);
             this.间歇时间.Name = "间歇时间";
             this.间歇时间.Size = new System.Drawing.Size(100, 28);
             this.间歇时间.TabIndex = 247;
@@ -1348,7 +1338,7 @@
             // Z方向自增_checkBox
             // 
             this.Z方向自增_checkBox.AutoSize = true;
-            this.Z方向自增_checkBox.Location = new System.Drawing.Point(83, 820);
+            this.Z方向自增_checkBox.Location = new System.Drawing.Point(72, 789);
             this.Z方向自增_checkBox.Name = "Z方向自增_checkBox";
             this.Z方向自增_checkBox.Size = new System.Drawing.Size(115, 22);
             this.Z方向自增_checkBox.TabIndex = 244;
@@ -1358,7 +1348,7 @@
             // Y方向自增_checkBox
             // 
             this.Y方向自增_checkBox.AutoSize = true;
-            this.Y方向自增_checkBox.Location = new System.Drawing.Point(83, 790);
+            this.Y方向自增_checkBox.Location = new System.Drawing.Point(72, 759);
             this.Y方向自增_checkBox.Name = "Y方向自增_checkBox";
             this.Y方向自增_checkBox.Size = new System.Drawing.Size(115, 22);
             this.Y方向自增_checkBox.TabIndex = 243;
@@ -1368,7 +1358,7 @@
             // X方向自增_checkBox
             // 
             this.X方向自增_checkBox.AutoSize = true;
-            this.X方向自增_checkBox.Location = new System.Drawing.Point(83, 762);
+            this.X方向自增_checkBox.Location = new System.Drawing.Point(72, 731);
             this.X方向自增_checkBox.Name = "X方向自增_checkBox";
             this.X方向自增_checkBox.Size = new System.Drawing.Size(115, 22);
             this.X方向自增_checkBox.TabIndex = 242;
@@ -1378,22 +1368,16 @@
             // label54
             // 
             this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(757, 820);
+            this.label54.Location = new System.Drawing.Point(746, 789);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(26, 18);
             this.label54.TabIndex = 254;
             this.label54.Text = "ms";
             // 
-            // Timer_ms
-            // 
-            this.Timer_ms.Enabled = true;
-            this.Timer_ms.Interval = 1;
-            this.Timer_ms.Tick += new System.EventHandler(this.Timer_ms_Tick);
-            // 
             // X正弦_checkBox
             // 
             this.X正弦_checkBox.AutoSize = true;
-            this.X正弦_checkBox.Location = new System.Drawing.Point(349, 735);
+            this.X正弦_checkBox.Location = new System.Drawing.Point(338, 704);
             this.X正弦_checkBox.Name = "X正弦_checkBox";
             this.X正弦_checkBox.Size = new System.Drawing.Size(115, 22);
             this.X正弦_checkBox.TabIndex = 213;
@@ -1403,7 +1387,7 @@
             // Y正弦_checkBox
             // 
             this.Y正弦_checkBox.AutoSize = true;
-            this.Y正弦_checkBox.Location = new System.Drawing.Point(349, 763);
+            this.Y正弦_checkBox.Location = new System.Drawing.Point(338, 732);
             this.Y正弦_checkBox.Name = "Y正弦_checkBox";
             this.Y正弦_checkBox.Size = new System.Drawing.Size(115, 22);
             this.Y正弦_checkBox.TabIndex = 214;
@@ -1413,7 +1397,7 @@
             // Z正弦_checkBox
             // 
             this.Z正弦_checkBox.AutoSize = true;
-            this.Z正弦_checkBox.Location = new System.Drawing.Point(349, 796);
+            this.Z正弦_checkBox.Location = new System.Drawing.Point(338, 765);
             this.Z正弦_checkBox.Name = "Z正弦_checkBox";
             this.Z正弦_checkBox.Size = new System.Drawing.Size(115, 22);
             this.Z正弦_checkBox.TabIndex = 215;
@@ -1423,7 +1407,7 @@
             // R正弦_checkBox
             // 
             this.R正弦_checkBox.AutoSize = true;
-            this.R正弦_checkBox.Location = new System.Drawing.Point(349, 824);
+            this.R正弦_checkBox.Location = new System.Drawing.Point(338, 793);
             this.R正弦_checkBox.Name = "R正弦_checkBox";
             this.R正弦_checkBox.Size = new System.Drawing.Size(115, 22);
             this.R正弦_checkBox.TabIndex = 216;
@@ -1432,7 +1416,7 @@
             // 
             // 运动时间
             // 
-            this.运动时间.Location = new System.Drawing.Point(651, 763);
+            this.运动时间.Location = new System.Drawing.Point(640, 732);
             this.运动时间.Name = "运动时间";
             this.运动时间.Size = new System.Drawing.Size(100, 28);
             this.运动时间.TabIndex = 218;
@@ -1440,7 +1424,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(565, 766);
+            this.label22.Location = new System.Drawing.Point(554, 735);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(80, 18);
             this.label22.TabIndex = 220;
@@ -1448,7 +1432,7 @@
             // 
             // 停止运动
             // 
-            this.停止运动.Location = new System.Drawing.Point(868, 803);
+            this.停止运动.Location = new System.Drawing.Point(857, 772);
             this.停止运动.Name = "停止运动";
             this.停止运动.Size = new System.Drawing.Size(100, 33);
             this.停止运动.TabIndex = 222;
@@ -1459,7 +1443,7 @@
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(757, 770);
+            this.label55.Location = new System.Drawing.Point(746, 739);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(26, 18);
             this.label55.TabIndex = 255;
@@ -1468,14 +1452,14 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(1359, 602);
+            this.label23.Location = new System.Drawing.Point(1557, 654);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(0, 18);
             this.label23.TabIndex = 261;
             // 
             // X正弦启动_button
             // 
-            this.X正弦启动_button.Location = new System.Drawing.Point(1261, 595);
+            this.X正弦启动_button.Location = new System.Drawing.Point(1459, 647);
             this.X正弦启动_button.Name = "X正弦启动_button";
             this.X正弦启动_button.Size = new System.Drawing.Size(100, 33);
             this.X正弦启动_button.TabIndex = 263;
@@ -1485,7 +1469,7 @@
             // 
             // X正弦停止_button
             // 
-            this.X正弦停止_button.Location = new System.Drawing.Point(1497, 586);
+            this.X正弦停止_button.Location = new System.Drawing.Point(1587, 647);
             this.X正弦停止_button.Name = "X正弦停止_button";
             this.X正弦停止_button.Size = new System.Drawing.Size(100, 33);
             this.X正弦停止_button.TabIndex = 262;
@@ -1495,7 +1479,7 @@
             // 
             // Y正弦启动_button
             // 
-            this.Y正弦启动_button.Location = new System.Drawing.Point(1261, 648);
+            this.Y正弦启动_button.Location = new System.Drawing.Point(1459, 700);
             this.Y正弦启动_button.Name = "Y正弦启动_button";
             this.Y正弦启动_button.Size = new System.Drawing.Size(100, 33);
             this.Y正弦启动_button.TabIndex = 266;
@@ -1505,7 +1489,7 @@
             // 
             // Y正弦停止_button
             // 
-            this.Y正弦停止_button.Location = new System.Drawing.Point(1497, 639);
+            this.Y正弦停止_button.Location = new System.Drawing.Point(1587, 700);
             this.Y正弦停止_button.Name = "Y正弦停止_button";
             this.Y正弦停止_button.Size = new System.Drawing.Size(100, 33);
             this.Y正弦停止_button.TabIndex = 265;
@@ -1516,14 +1500,14 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(1359, 655);
+            this.label24.Location = new System.Drawing.Point(1557, 707);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(0, 18);
             this.label24.TabIndex = 264;
             // 
             // Z正弦启动_button
             // 
-            this.Z正弦启动_button.Location = new System.Drawing.Point(1261, 700);
+            this.Z正弦启动_button.Location = new System.Drawing.Point(1459, 752);
             this.Z正弦启动_button.Name = "Z正弦启动_button";
             this.Z正弦启动_button.Size = new System.Drawing.Size(100, 33);
             this.Z正弦启动_button.TabIndex = 269;
@@ -1533,7 +1517,7 @@
             // 
             // Z正弦停止_button
             // 
-            this.Z正弦停止_button.Location = new System.Drawing.Point(1497, 691);
+            this.Z正弦停止_button.Location = new System.Drawing.Point(1587, 752);
             this.Z正弦停止_button.Name = "Z正弦停止_button";
             this.Z正弦停止_button.Size = new System.Drawing.Size(100, 33);
             this.Z正弦停止_button.TabIndex = 268;
@@ -1544,14 +1528,14 @@
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(1359, 707);
+            this.label56.Location = new System.Drawing.Point(1557, 759);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(0, 18);
             this.label56.TabIndex = 267;
             // 
             // R正弦启动_button
             // 
-            this.R正弦启动_button.Location = new System.Drawing.Point(1261, 751);
+            this.R正弦启动_button.Location = new System.Drawing.Point(1459, 803);
             this.R正弦启动_button.Name = "R正弦启动_button";
             this.R正弦启动_button.Size = new System.Drawing.Size(100, 33);
             this.R正弦启动_button.TabIndex = 272;
@@ -1561,7 +1545,7 @@
             // 
             // R正弦停止_button
             // 
-            this.R正弦停止_button.Location = new System.Drawing.Point(1497, 742);
+            this.R正弦停止_button.Location = new System.Drawing.Point(1587, 803);
             this.R正弦停止_button.Name = "R正弦停止_button";
             this.R正弦停止_button.Size = new System.Drawing.Size(100, 33);
             this.R正弦停止_button.TabIndex = 271;
@@ -1572,27 +1556,156 @@
             // label57
             // 
             this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(1359, 758);
+            this.label57.Location = new System.Drawing.Point(1557, 810);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(0, 18);
             this.label57.TabIndex = 270;
             // 
-            // 位置增量值写入
+            // Ar_checkBox
             // 
-            this.位置增量值写入.Location = new System.Drawing.Point(383, 622);
-            this.位置增量值写入.Name = "位置增量值写入";
-            this.位置增量值写入.Size = new System.Drawing.Size(179, 51);
-            this.位置增量值写入.TabIndex = 273;
-            this.位置增量值写入.Text = "位置增量值写入";
-            this.位置增量值写入.UseVisualStyleBackColor = true;
-            this.位置增量值写入.Click += new System.EventHandler(this.位置增量值写入_Click);
+            this.Ar_checkBox.AutoSize = true;
+            this.Ar_checkBox.Location = new System.Drawing.Point(1064, 764);
+            this.Ar_checkBox.Name = "Ar_checkBox";
+            this.Ar_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Ar_checkBox.TabIndex = 277;
+            this.Ar_checkBox.Text = "Ar自增";
+            this.Ar_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Az_checkBox
+            // 
+            this.Az_checkBox.AutoSize = true;
+            this.Az_checkBox.Location = new System.Drawing.Point(1064, 736);
+            this.Az_checkBox.Name = "Az_checkBox";
+            this.Az_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Az_checkBox.TabIndex = 276;
+            this.Az_checkBox.Text = "Az自增";
+            this.Az_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Ay_checkBox
+            // 
+            this.Ay_checkBox.AutoSize = true;
+            this.Ay_checkBox.Location = new System.Drawing.Point(1064, 703);
+            this.Ay_checkBox.Name = "Ay_checkBox";
+            this.Ay_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Ay_checkBox.TabIndex = 275;
+            this.Ay_checkBox.Text = "Ay自增";
+            this.Ay_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Ax_checkBox
+            // 
+            this.Ax_checkBox.AutoSize = true;
+            this.Ax_checkBox.Location = new System.Drawing.Point(1064, 675);
+            this.Ax_checkBox.Name = "Ax_checkBox";
+            this.Ax_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Ax_checkBox.TabIndex = 274;
+            this.Ax_checkBox.Text = "Ax自增";
+            this.Ax_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Fr_checkBox
+            // 
+            this.Fr_checkBox.AutoSize = true;
+            this.Fr_checkBox.Location = new System.Drawing.Point(1179, 764);
+            this.Fr_checkBox.Name = "Fr_checkBox";
+            this.Fr_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Fr_checkBox.TabIndex = 281;
+            this.Fr_checkBox.Text = "Fr自增";
+            this.Fr_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Fz_checkBox
+            // 
+            this.Fz_checkBox.AutoSize = true;
+            this.Fz_checkBox.Location = new System.Drawing.Point(1179, 736);
+            this.Fz_checkBox.Name = "Fz_checkBox";
+            this.Fz_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Fz_checkBox.TabIndex = 280;
+            this.Fz_checkBox.Text = "Fz自增";
+            this.Fz_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Fy_checkBox
+            // 
+            this.Fy_checkBox.AutoSize = true;
+            this.Fy_checkBox.Location = new System.Drawing.Point(1179, 703);
+            this.Fy_checkBox.Name = "Fy_checkBox";
+            this.Fy_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Fy_checkBox.TabIndex = 279;
+            this.Fy_checkBox.Text = "Fy自增";
+            this.Fy_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Fx_checkBox
+            // 
+            this.Fx_checkBox.AutoSize = true;
+            this.Fx_checkBox.Location = new System.Drawing.Point(1179, 675);
+            this.Fx_checkBox.Name = "Fx_checkBox";
+            this.Fx_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Fx_checkBox.TabIndex = 278;
+            this.Fx_checkBox.Text = "Fx自增";
+            this.Fx_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Or_checkBox
+            // 
+            this.Or_checkBox.AutoSize = true;
+            this.Or_checkBox.Location = new System.Drawing.Point(1279, 764);
+            this.Or_checkBox.Name = "Or_checkBox";
+            this.Or_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Or_checkBox.TabIndex = 285;
+            this.Or_checkBox.Text = "Or自增";
+            this.Or_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Oz_checkBox
+            // 
+            this.Oz_checkBox.AutoSize = true;
+            this.Oz_checkBox.Location = new System.Drawing.Point(1279, 736);
+            this.Oz_checkBox.Name = "Oz_checkBox";
+            this.Oz_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Oz_checkBox.TabIndex = 284;
+            this.Oz_checkBox.Text = "Oz自增";
+            this.Oz_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Oy_checkBox
+            // 
+            this.Oy_checkBox.AutoSize = true;
+            this.Oy_checkBox.Location = new System.Drawing.Point(1279, 703);
+            this.Oy_checkBox.Name = "Oy_checkBox";
+            this.Oy_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Oy_checkBox.TabIndex = 283;
+            this.Oy_checkBox.Text = "Oy自增";
+            this.Oy_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Ox_checkBox
+            // 
+            this.Ox_checkBox.AutoSize = true;
+            this.Ox_checkBox.Location = new System.Drawing.Point(1279, 675);
+            this.Ox_checkBox.Name = "Ox_checkBox";
+            this.Ox_checkBox.Size = new System.Drawing.Size(88, 22);
+            this.Ox_checkBox.TabIndex = 282;
+            this.Ox_checkBox.Text = "Ox自增";
+            this.Ox_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // Timer_Run
+            // 
+            this.Timer_Run.Tick += new System.EventHandler(this.Timer_Run_Tick);
+            // 
+            // Timer_Rest
+            // 
+            this.Timer_Rest.Tick += new System.EventHandler(this.Timer_Rest_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1879, 852);
-            this.Controls.Add(this.位置增量值写入);
+            this.ClientSize = new System.Drawing.Size(1747, 852);
+            this.Controls.Add(this.Or_checkBox);
+            this.Controls.Add(this.Oz_checkBox);
+            this.Controls.Add(this.Oy_checkBox);
+            this.Controls.Add(this.Ox_checkBox);
+            this.Controls.Add(this.Fr_checkBox);
+            this.Controls.Add(this.Fz_checkBox);
+            this.Controls.Add(this.Fy_checkBox);
+            this.Controls.Add(this.Fx_checkBox);
+            this.Controls.Add(this.Ar_checkBox);
+            this.Controls.Add(this.Az_checkBox);
+            this.Controls.Add(this.Ay_checkBox);
+            this.Controls.Add(this.Ax_checkBox);
             this.Controls.Add(this.R正弦启动_button);
             this.Controls.Add(this.R正弦停止_button);
             this.Controls.Add(this.label57);
@@ -1639,7 +1752,6 @@
             this.Controls.Add(this.Y正弦_checkBox);
             this.Controls.Add(this.X正弦_checkBox);
             this.Controls.Add(this.label21);
-            this.Controls.Add(this.增量值写入);
             this.Controls.Add(this.固定值写入);
             this.Controls.Add(this.label42);
             this.Controls.Add(this.label43);
@@ -1750,7 +1862,6 @@
             this.Controls.Add(this.X_GO_textBox);
             this.Controls.Add(this.Port_textBox);
             this.Controls.Add(this.IP_textBox);
-            this.Controls.Add(this.XYZ_button);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -1779,7 +1890,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button XYZ_button;
         private System.Windows.Forms.TextBox IP_textBox;
         private System.Windows.Forms.TextBox Port_textBox;
         private System.Windows.Forms.Label label6;
@@ -1891,7 +2001,6 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Button 固定值写入;
-        private System.Windows.Forms.Button 增量值写入;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
@@ -1918,7 +2027,6 @@
         private System.Windows.Forms.CheckBox Y方向自增_checkBox;
         private System.Windows.Forms.CheckBox X方向自增_checkBox;
         private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.Timer Timer_ms;
         private System.Windows.Forms.CheckBox X正弦_checkBox;
         private System.Windows.Forms.CheckBox Y正弦_checkBox;
         private System.Windows.Forms.CheckBox Z正弦_checkBox;
@@ -1939,7 +2047,20 @@
         private System.Windows.Forms.Button R正弦启动_button;
         private System.Windows.Forms.Button R正弦停止_button;
         private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.Button 位置增量值写入;
+        private System.Windows.Forms.CheckBox Ar_checkBox;
+        private System.Windows.Forms.CheckBox Az_checkBox;
+        private System.Windows.Forms.CheckBox Ay_checkBox;
+        private System.Windows.Forms.CheckBox Ax_checkBox;
+        private System.Windows.Forms.CheckBox Fr_checkBox;
+        private System.Windows.Forms.CheckBox Fz_checkBox;
+        private System.Windows.Forms.CheckBox Fy_checkBox;
+        private System.Windows.Forms.CheckBox Fx_checkBox;
+        private System.Windows.Forms.CheckBox Or_checkBox;
+        private System.Windows.Forms.CheckBox Oz_checkBox;
+        private System.Windows.Forms.CheckBox Oy_checkBox;
+        private System.Windows.Forms.CheckBox Ox_checkBox;
+        private System.Windows.Forms.Timer Timer_Run;
+        private System.Windows.Forms.Timer Timer_Rest;
     }
 }
 
